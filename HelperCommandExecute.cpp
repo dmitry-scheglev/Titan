@@ -336,30 +336,7 @@ void HelperCommandExecute::UnloadDll()
 }
 
 
-bool HelperCommandExecute::RemoveHooks(HWND ownerWindowHandle)
-{
-	bool Ret=false;
-	try
-	{
-		if (_dllHandle == NULL)
-			return false;
 
-		WCHAR controlDllFile[MAX_PATH] = L"";
-		GetControlDllFile(controlDllFile, MAX_PATH);
-
-		DynamicFn<Win_Hooks_Remove_proto> Win_Hooks_Remove(controlDllFile, "Win_Hooks_Remove");
-
-		if (Win_Hooks_Remove.isValid())
-			Ret=(TRUE==(*Win_Hooks_Remove)((DWORD)ownerWindowHandle));
-
-		UnloadDll();
-
-		_hooksInstalled = FALSE;
-	}
-	catch(...) {}
-
-	return Ret;
-}
 
 
 void HelperCommandExecute::AdapterIsSlow(BOOL isSlow)
